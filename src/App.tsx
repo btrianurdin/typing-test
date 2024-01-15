@@ -13,6 +13,7 @@ import cn from './utils/cn';
 import { TypingTimeMemo } from './components/typing-time';
 import TestResult from './components/test-result';
 import CreditFooter from './components/credit-footer';
+import ThemeSwitcher from './components/theme-switcher';
 
 function App() {
   const dispatch = useDispatch();
@@ -64,39 +65,43 @@ function App() {
   }, [handleTypingStart]);
 
   return (
-    <div className="max-w-screen-lg mx-auto flex flex-col justify-center h-screen p-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold mb-6">Typing Test</h1>
-        {typingState !== 'end' && <TypingTimeMemo />}
-      </div>
-      {typingState === 'end' ? (
-        <TestResult />
-      ) : (
-        <div className="h-[140px] overflow-hidden">
-          <div className="word-lists">
-            {wordLists.map((word, idx) => {
-              return (
-                <div
-                  key={`word${idx}`}
-                  data-word-order={idx}
-                  className={cn('word', {
-                    highlight: idx === currentWordIndex,
-                  })}
-                >
-                  {word.split('').map((char, idx) => (
-                    <span key={`char${idx}${word}`}>{char}</span>
-                  ))}
-                  {extraWords[idx]?.split('').map((char, idx) => (
-                    <span key={`extra-char${idx}${word}`} className="c-wrong">
-                      {char}
-                    </span>
-                  ))}
-                </div>
-              );
-            })}
-          </div>
+    <div className="max-w-screen-lg mx-auto flex flex-col justify-between h-screen p-6 gap-10">
+      <ThemeSwitcherMemo />
+
+      <div>
+        <div className="flex justify-between items-center text-ts-secondary">
+          <h1 className="text-2xl font-bold mb-6">Typing Test</h1>
+          {typingState !== 'end' && <TypingTimeMemo />}
         </div>
-      )}
+        {typingState === 'end' ? (
+          <TestResult />
+        ) : (
+          <div className="h-[140px] overflow-hidden">
+            <div className="word-lists">
+              {wordLists.map((word, idx) => {
+                return (
+                  <div
+                    key={`word${idx}`}
+                    data-word-order={idx}
+                    className={cn('word', {
+                      highlight: idx === currentWordIndex,
+                    })}
+                  >
+                    {word.split('').map((char, idx) => (
+                      <span key={`char${idx}${word}`}>{char}</span>
+                    ))}
+                    {extraWords[idx]?.split('').map((char, idx) => (
+                      <span key={`extra-char${idx}${word}`} className="c-wrong">
+                        {char}
+                      </span>
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
 
       <CreditFooterMemo />
     </div>
@@ -104,5 +109,6 @@ function App() {
 }
 
 const CreditFooterMemo = memo(CreditFooter);
+const ThemeSwitcherMemo = memo(ThemeSwitcher);
 
 export default App;

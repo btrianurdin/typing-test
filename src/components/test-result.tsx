@@ -11,17 +11,17 @@ const TestResult = () => {
 
   return (
     <div className="max-w-xs w-full mx-auto mt-5">
-      <div className="p-5 shadow-box">
+      <div className="p-5 shadow-box text-ts-secondary">
         <h2 className="text-center font-bold">Test Result</h2>
         <div className="flex justify-center items-end mt-6">
           <h1 className="text-5xl">{result.score}</h1>
           <p className="font-semibold">WPM</p>
         </div>
-        <div className="flex justify-between mt-6 text-green-700">
+        <div className="flex justify-between mt-6 text-ts-success">
           <p>Correct words</p>
           <p>{result.correct}</p>
         </div>
-        <div className="flex justify-between mt-3 text-red-700">
+        <div className="flex justify-between mt-3 text-ts-error">
           <p>Wrong words</p>
           <p>{result.wrong}</p>
         </div>

@@ -3,33 +3,53 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --theme-background: 241 245 249;
+    --theme-secondary: 0 0 0;
+    --theme-deep-gray: 55 65 81; 
+    --theme-gray: 209 213 219;
+    --theme-light-gray: 229 231 235;
+    --theme-success: 22 163 74;
+    --theme-error: 220 38 38;
+  }
+
+  html.dark {
+    --theme-background: 2 6 23;
+    --theme-secondary: 243 244 246;
+    --theme-deep-gray: 156 163 175; 
+    --theme-gray:  30 41 59; 
+    --theme-light-gray: 30 41 59;
+    --theme-success: 22 101 52;
+    --theme-error: 153 27 27;
+  }
+
   body {
-    @apply bg-slate-100 font-roboto;
+    @apply bg-ts-background font-roboto transition-colors duration-300;
   }
 }
 
 @layer components {
   .word-lists {
-    @apply flex gap-4 flex-wrap [&_[data-wrong]_span]:text-red-700;
+    @apply flex gap-4 flex-wrap [&_[data-wrong]_span]:text-ts-error text-ts-secondary;
     & .word {
-      @apply text-2xl [&_.c-correct]:!text-green-600 [&_.c-wrong]:text-red-600;
+      @apply text-2xl [&_.c-correct]:!text-ts-success [&_.c-wrong]:text-ts-error;
       &.highlight {
-        @apply bg-gray-300;
+        @apply bg-ts-gray;
       }
     }
   }
 
   .shadow-box {
-    @apply border-4 border-black;
-    box-shadow: 9px 9px 2px -1px black;
+    @apply border-4 border-ts-secondary shadow shadow-ts-secondary;
+    box-shadow: 9px 9px 2px -1px;
     &-button {
-      @apply border-4 border-black;
-      box-shadow: 6px 6px 2px -1px black;
+      @apply border-4 border-ts-secondary text-ts-secondary;
+      box-shadow: 6px 6px 2px -1px;
       &:disabled {
-        @apply bg-gray-300 cursor-not-allowed;
+        @apply bg-ts-gray cursor-not-allowed;
       }
       &:not(:disabled):active {
-        box-shadow: 4px 4px 2px -1px black;
+        box-shadow: 4px 4px 2px -1px;
       }
     }
   }
