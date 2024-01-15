@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-100 font-roboto;
+  }
+}
+
+@layer components {
+  .word-lists {
+    @apply flex gap-4 flex-wrap [&_[data-wrong]_span]:text-red-700;
+    & .word {
+      @apply text-2xl [&_.c-correct]:!text-green-600 [&_.c-wrong]:text-red-600;
+      &.highlight {
+        @apply bg-gray-300;
+      }
+    }
+  }
+
+  .shadow-box {
+    @apply border-4 border-black;
+    box-shadow: 9px 9px 2px -1px black;
+    &-button {
+      @apply border-4 border-black;
+      box-shadow: 6px 6px 2px -1px black;
+      &:disabled {
+        @apply bg-gray-300 cursor-not-allowed;
+      }
+      &:not(:disabled):active {
+        box-shadow: 4px 4px 2px -1px black;
+      }
+    }
+  }
+}
