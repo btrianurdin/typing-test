@@ -7,6 +7,9 @@ Elevate your keyboard finesse with our engaging typing test application – a si
 ![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
 
 ## Preview
+| Preview 1 | Preview 2 |
+| ----------- | ----------- |
+| ![Preview 1](https://raw.githubusercontent.com/btrianurdin/typing-test/master/preview-1.png "Preview 1") | ![Preview 2](https://raw.githubusercontent.com/btrianurdin/typing-test/master/preview-2.png "Preview 2") |
 
 ## Project Setup
 Note: This project built with [bun](https://bun.sh/docs)
