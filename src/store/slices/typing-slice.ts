@@ -1,37 +1,47 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit/react';
 
+export type TypingLanguage = 'EN' | 'ID';
+
 export type TypingState = {
+  language: TypingLanguage;
   wordLists: string[];
   currentWord: string;
   currentWordIndex: number;
   currentWordChar: string;
   currentWordCharIndex: number;
   extraWords: string[];
-  extraWordsIndex: number;
+  spaceCount: number;
+  correctCharCount: number;
   time: number;
   typingState: 'ready' | 'typing' | 'end';
   result: {
     score: number;
-    correct: number;
-    wrong: number;
+    correctWord: number;
+    wrongWord: number;
+    correctChar: number;
+    wrongChar: number;
   };
 };
 
 const initialState: TypingState = {
+  language: 'EN',
   wordLists: [],
   currentWord: '',
   currentWordIndex: 0,
   currentWordChar: '',
   currentWordCharIndex: 0,
   extraWords: [],
-  extraWordsIndex: 0,
+  spaceCount: 0,
+  correctCharCount: 0,
   time: 60,
   typingState: 'ready',
   result: {
     score: 0,
-    correct: 0,
-    wrong: 0,
+    correctWord: 0,
+    wrongWord: 0,
+    correctChar: 0,
+    wrongChar: 0,
   },
 };
 
@@ -39,6 +49,9 @@ const typingSlice = createSlice({
   name: 'typing',
   initialState,
   reducers: {
+    updateLanguage: (state, action: PayloadAction<TypingLanguage>) => {
+      state.language = action.payload;
+    },
     resetState: (state) => {
       if (state.typingState === 'ready') return;
       state.wordLists = [];
@@ -47,7 +60,7 @@ const typingSlice = createSlice({
       state.currentWordChar = '';
       state.currentWordCharIndex = 0;
       state.extraWords = [];
-      state.extraWordsIndex = 0;
+      state.spaceCount = 0;
       state.time = initialState.time;
       state.typingState = initialState.typingState;
       state.result = initialState.result;
@@ -139,6 +152,8 @@ const typingSlice = createSlice({
         });
       }
 
+      state.spaceCount++;
+
       state.currentWordIndex++;
       state.currentWord = state.wordLists[state.currentWordIndex];
 
@@ -157,10 +172,17 @@ const typingSlice = createSlice({
         );
         const wordWrong = document.querySelectorAll('.word-lists [data-wrong]');
 
+        const correctChar = document.querySelectorAll('.c-correct');
+        const wrongChar = document.querySelectorAll('.c-wrong');
+
         state.result = {
-          score: wordCorrect.length,
-          correct: wordCorrect.length || 0,
-          wrong: wordWrong.length || 0,
+          score: Math.round(
+            (correctChar.length + state.spaceCount) / 5 / (state.time / 60),
+          ),
+          correctWord: wordCorrect.length || 0,
+          wrongWord: wordWrong.length || 0,
+          correctChar: correctChar.length || 0,
+          wrongChar: wrongChar.length || 0,
         };
       }
     },
@@ -168,6 +190,7 @@ const typingSlice = createSlice({
 });
 
 export const {
+  updateLanguage,
   addWordList,
   updateNextWord,
   updateNextChar,

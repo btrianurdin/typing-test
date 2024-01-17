@@ -14,16 +14,15 @@ import { TypingTimeMemo } from './components/typing-time';
 import TestResult from './components/test-result';
 import CreditFooter from './components/credit-footer';
 import ThemeSwitcher from './components/theme-switcher';
+import LanguageSwitcher from './components/language-switcher';
 
 function App() {
   const dispatch = useDispatch();
-  const { wordLists, currentWordIndex, typingState, extraWords } = useSelector<
-    RootState,
-    TypingState
-  >((state) => state.typing);
+  const { language, wordLists, currentWordIndex, typingState, extraWords } =
+    useSelector<RootState, TypingState>((state) => state.typing);
 
   const fetchWordLists = useCallback(() => {
-    import('@/data/word-lists.json').then((data) => {
+    import(`@/data/word-lists/${language}.json`).then((data) => {
       const words = data.default[
         Math.floor(Math.random() * data.default.length)
       ] as unknown as string[];
@@ -31,7 +30,7 @@ function App() {
 
       dispatch(addWordList(randomWords));
     });
-  }, [dispatch]);
+  }, [dispatch, language]);
 
   useEffect(() => {
     if (typingState === 'ready') {
@@ -66,7 +65,10 @@ function App() {
 
   return (
     <div className="max-w-screen-lg mx-auto flex flex-col justify-between h-screen p-6 gap-10">
-      <ThemeSwitcherMemo />
+      <div className="flex w-full xl:h-[10%] justify-between">
+        <LanguageSwitcherMemo />
+        <ThemeSwitcherMemo />
+      </div>
 
       <div>
         <div className="flex justify-between items-center text-ts-secondary">
@@ -110,5 +112,6 @@ function App() {
 
 const CreditFooterMemo = memo(CreditFooter);
 const ThemeSwitcherMemo = memo(ThemeSwitcher);
+const LanguageSwitcherMemo = memo(LanguageSwitcher);
 
 export default App;

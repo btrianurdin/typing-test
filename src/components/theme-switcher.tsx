@@ -5,7 +5,7 @@ const ThemeSwitcher = () => {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="xl:h-[10%] flex justify-center items-start gap-6">
+    <div className="flex justify-center items-start gap-6">
       <button
         className={cn('text-ts-deep-gray', {
           'text-ts-secondary font-bold': theme === 'light',

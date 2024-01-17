@@ -19,11 +19,11 @@ const TestResult = () => {
         </div>
         <div className="flex justify-between mt-6 text-ts-success">
           <p>Correct words</p>
-          <p>{result.correct}</p>
+          <p>{result.correctWord}</p>
         </div>
         <div className="flex justify-between mt-3 text-ts-error">
           <p>Wrong words</p>
-          <p>{result.wrong}</p>
+          <p>{result.wrongWord}</p>
         </div>
       </div>
       <div className="mt-6 flex gap-5">
